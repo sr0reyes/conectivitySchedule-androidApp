@@ -1,0 +1,2 @@
+rootProject.name='ConectivityAlarm'
+include ':app'
