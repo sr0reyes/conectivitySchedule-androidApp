@@ -1,5 +1,6 @@
 package com.example.conectivityalarm;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
@@ -8,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -29,10 +32,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int aMinute;
     boolean activate;
 
+    int toastDuration;
+    String strActivity;
+    String strAction;
+    String strTime;
+    String mensaje;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        strActivity = getString(R.string.activity_name);
+        toastDuration =Toast.LENGTH_LONG;
 
         aHour = 0;
         aMinute = 0;
@@ -50,9 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (position){
                     case 0:
                         activate = true;
+                        strAction = getString(R.string.activate);
                         break;
                     case 1:
                         activate = false;
+                        strAction = getString(R.string.deactvate);
                         break;
                 }
             }
@@ -67,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    setAlarm(aHour, aMinute, activate);
+                    setAlarm();
                 }
                 else{
                     cancelAlarm();
@@ -86,9 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 aMinute = minute;
                 String formatHour =  (hourOfDay < 10)? String.valueOf("0" + hourOfDay) : String.valueOf(hourOfDay);
                 String formatMinute =  (minute < 10)? String.valueOf("0" + minute) : String.valueOf(minute);
-                tvTime.setText(formatHour + ":" + formatMinute);
+                strTime = formatHour + ":" + formatMinute;
+                tvTime.setText(strTime);
                 if(swActivate.isChecked()){
-                    setAlarm(aHour, aMinute, activate);
+                    setAlarm();
                 }
             }
 
@@ -98,12 +114,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timePicker.show();
     }
 
-    public void setAlarm(int hour, int minute, boolean activate){
+    public void setAlarm(){
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, hour);
-        c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.HOUR_OF_DAY, aHour);
+        c.set(Calendar.MINUTE, aMinute);
         c.set(Calendar.SECOND, 0);
 
+        //API Level 24
+        mensaje = TextUtils.join(" ", new String[]{strActivity, getString(R.string.preposition1), strAction, getString(R.string.preposition2), strTime});
+
+        //API Level 26
+        //mensaje = String.join(" ", strActivity, getString(R.string.preposition1), strAction, getString(R.string.preposition2), strTime);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -115,8 +136,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        Toast toast = Toast.makeText(getApplicationContext(), mensaje, toastDuration);
+        toast.show();
         Log.d("Alarm setted at",  String.valueOf(aHour)+":"+String.valueOf(aMinute) + "  action=" + String.valueOf(activate));
     }
+
 
     public void cancelAlarm(){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
