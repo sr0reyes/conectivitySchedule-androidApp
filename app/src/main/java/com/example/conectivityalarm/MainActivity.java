@@ -33,10 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean activate;
 
     int toastDuration;
-    String strActivity;
-    String strAction;
     String strTime;
-    String mensaje;
+    String toastMessage;
 
 
     @Override
@@ -44,8 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        strActivity = getString(R.string.activity_name);
         toastDuration =Toast.LENGTH_LONG;
+        strTime = getString(R.string.defaultTime);
+        toastMessage = getString(R.string.toastWifiOn);
 
         aHour = 0;
         aMinute = 0;
@@ -63,11 +62,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (position){
                     case 0:
                         activate = true;
-                        strAction = getString(R.string.activate);
+                        toastMessage = getString(R.string.toastWifiOn);
                         break;
                     case 1:
                         activate = false;
-                        strAction = getString(R.string.deactvate);
+                        toastMessage = getString(R.string.toastWifiOff);
                         break;
                 }
             }
@@ -120,11 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         c.set(Calendar.MINUTE, aMinute);
         c.set(Calendar.SECOND, 0);
 
-        //API Level 24
-        mensaje = TextUtils.join(" ", new String[]{strActivity, getString(R.string.preposition1), strAction, getString(R.string.preposition2), strTime});
-
-        //API Level 26
-        //mensaje = String.join(" ", strActivity, getString(R.string.preposition1), strAction, getString(R.string.preposition2), strTime);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -136,9 +130,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-        Toast toast = Toast.makeText(getApplicationContext(), mensaje, toastDuration);
-        toast.show();
         Log.d("Alarm setted at",  String.valueOf(aHour)+":"+String.valueOf(aMinute) + "  action=" + String.valueOf(activate));
+        sendToast();
     }
 
 
@@ -150,5 +143,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         alarmManager.cancel(pendingIntent);
         Log.d("Alarm unsetted",  String.valueOf(aHour)+":"+String.valueOf(aMinute));
+    }
+
+
+    public void sendToast(){
+        toastMessage += " " + strTime;
+        Toast toast = Toast.makeText(getApplicationContext(), toastMessage, toastDuration);
+        toast.show();
     }
 }

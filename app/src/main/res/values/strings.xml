@@ -1,14 +1,18 @@
 <resources>
     <string name="app_name">ConectivityAlarm</string>
-    <string name="activity_name"> Wi-Fi</string>
-    <string name="defaultTime"> 00:00</string>
-    <string name="preposition1"> se</string>
-    <string name="preposition2"> a las</string>
-    <string name="activate"> encenderá</string>
-    <string name="deactvate"> apagará</string>
+    <string name="activity_wifi">Wi-Fi</string>
+    <string name="defaultTime">00:00</string>
+    <string name="preposition">a las</string>
+    <string name="toastWifiOn">W-Fi se activará a las</string>
+    <string name="toastWifiOff">W-Fi se desactivará a las</string>
+    <string name="notificationWifiOn">El Wi-Fi se activó</string>
+    <string name="notificationWifiOff">El Wi-Fi se desactivó</string>
 
+
+    <string name="turnOn">Encender</string>
+    <string name="turnOff">Apagar</string>
     <string-array name="defaultActions">
-        <item>Encender</item>
-        <item>Apagar</item>
+        <item>@string/turnOn</item>
+        <item>@string/turnOff</item>
     </string-array>
 </resources>

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="2"
-        android:text="@string/preposition2"/>
+        android:text="@string/preposition"/>
 
     <TextView
         android:id="@+id/time_tv"
