@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ConectivityAlarm</string>
     <string name="activity_wifi">Wi-Fi</string>
+    <string name="activity_bluetooth">Bluetooth</string>
     <string name="defaultTime">00:00</string>
     <string name="preposition">a las</string>
     <string name="toastWifiOn">W-Fi se activará a las</string>
