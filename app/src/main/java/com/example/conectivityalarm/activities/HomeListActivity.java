@@ -1,4 +1,4 @@
-package com.example.conectivityalarm;
+package com.example.conectivityalarm.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,9 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.conectivityalarm.R;
+
 import java.util.ArrayList;
 
-public class HomeList extends AppCompatActivity {
+public class HomeListActivity extends AppCompatActivity {
 
     ListView optionsList;
     ArrayList<String> optionsArr;
@@ -45,10 +47,10 @@ public class HomeList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String optionSelected = (String)parent.getItemAtPosition(position);
                 if(optionSelected.equals(wifiStr)) {
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent = new Intent(getApplicationContext(), AlarmActivity.class);
                 }
                 if(optionSelected.equals(bluetoothStr)) {
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent = new Intent(getApplicationContext(), AlarmActivity.class);
                 }
                 startActivity(intent);
             }
