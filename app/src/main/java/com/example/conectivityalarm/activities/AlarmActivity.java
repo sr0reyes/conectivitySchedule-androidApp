@@ -1,11 +1,14 @@
 package com.example.conectivityalarm.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.conectivityalarm.R;
 import com.example.conectivityalarm.adapters.RecyclerViewAdapter;
 import com.example.conectivityalarm.myclasses.Alarm;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,15 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class AlarmActivity extends AppCompatActivity {
 
-    ArrayList<Alarm> alarms;
+    ArrayList<Alarm> alarmsList;
     RecyclerView recyclerView;
     RecyclerViewAdapter rvAdapter;
     ItemTouchHelper itemTouchHelper;
-
 
 
     @Override
@@ -34,7 +37,8 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        alarms = new ArrayList<>();
+
+        loadAlarmList();
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,10 +54,13 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 insertAlarm(rvAdapter.getItemCount());
-                sendToast("No de Alarmas" + String.valueOf(Alarm.getAlarmCount()), Toast.LENGTH_SHORT);
+                saveAlarmList();
+                sendToast("No de Alarmas" + String.valueOf(alarmsList.size()), Toast.LENGTH_SHORT);
             }
         });
     }
+
+
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
@@ -64,13 +71,14 @@ public class AlarmActivity extends AppCompatActivity {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             removeAlarm(viewHolder.getAdapterPosition());
+            saveAlarmList();
         }
     };
 
     void buildRecyclerView(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        rvAdapter = new RecyclerViewAdapter(alarms, new RecyclerViewAdapter.MyRecyclerViewActionListener() {
+        rvAdapter = new RecyclerViewAdapter(alarmsList, new RecyclerViewAdapter.MyRecyclerViewActionListener() {
             @Override
             public void onItemClickListener(long itemId, int itemPosition) {
                 sendToast("itemId: " + itemId + ", itemPosition: " + itemPosition, Toast.LENGTH_LONG);
@@ -87,13 +95,13 @@ public class AlarmActivity extends AppCompatActivity {
 
     void insertAlarm(int position){
        Alarm newAlarm = new Alarm();
-       alarms.add(newAlarm);
+       alarmsList.add(newAlarm);
        rvAdapter.notifyItemInserted(position);
 
     }
 
     void removeAlarm(int id){
-        alarms.remove(id);
+        alarmsList.remove(id);
         Alarm.decreaseAlarmCount();
         rvAdapter.notifyItemRemoved(id);
     }
@@ -103,5 +111,27 @@ public class AlarmActivity extends AppCompatActivity {
         toast.show();
     }
 
+    private void saveAlarmList(){
+        SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(alarmsList);
+        editor.putString("AlarmList", json);
+        editor.apply();
+
+    }
+
+    private void loadAlarmList(){
+        SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("AlarmList", null);
+        Type type = new TypeToken<ArrayList<Alarm>>() {}.getType();
+        alarmsList = gson.fromJson(json,type);
+
+        if(alarmsList == null){
+            alarmsList = new ArrayList<>();
+        }
+
+    }
 
 }
