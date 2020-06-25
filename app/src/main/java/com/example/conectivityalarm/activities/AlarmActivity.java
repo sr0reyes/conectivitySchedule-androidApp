@@ -1,5 +1,6 @@
 package com.example.conectivityalarm.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 
 public class AlarmActivity extends AppCompatActivity {
 
-    ArrayList<Alarm> alarmsList;
+    String activityTitle;
+    ArrayList<Alarm> currentAlarmList;
     RecyclerView recyclerView;
     RecyclerViewAdapter rvAdapter;
     ItemTouchHelper itemTouchHelper;
@@ -37,16 +40,18 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        Intent intent = getIntent();
 
-        loadAlarmList();
-        itemTouchHelper = new ItemTouchHelper(simpleCallback);
-
+        activityTitle = intent.getStringExtra("OPTION");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(activityTitle);
 
-
-
+        loadAlarmList(activityTitle);
         buildRecyclerView();
+
+        itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -54,8 +59,8 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 insertAlarm(rvAdapter.getItemCount());
-                saveAlarmList();
-                sendToast("No de Alarmas" + String.valueOf(alarmsList.size()), Toast.LENGTH_SHORT);
+                saveAlarmList(activityTitle);
+                sendToast("No de Alarmas" + String.valueOf(currentAlarmList.size()), Toast.LENGTH_SHORT);
             }
         });
     }
@@ -71,14 +76,14 @@ public class AlarmActivity extends AppCompatActivity {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             removeAlarm(viewHolder.getAdapterPosition());
-            saveAlarmList();
+            saveAlarmList(activityTitle);
         }
     };
 
     void buildRecyclerView(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        rvAdapter = new RecyclerViewAdapter(alarmsList, new RecyclerViewAdapter.MyRecyclerViewActionListener() {
+        rvAdapter = new RecyclerViewAdapter(currentAlarmList, new RecyclerViewAdapter.MyRecyclerViewActionListener() {
             @Override
             public void onItemClickListener(long itemId, int itemPosition) {
                 sendToast("itemId: " + itemId + ", itemPosition: " + itemPosition, Toast.LENGTH_LONG);
@@ -95,14 +100,13 @@ public class AlarmActivity extends AppCompatActivity {
 
     void insertAlarm(int position){
        Alarm newAlarm = new Alarm();
-       alarmsList.add(newAlarm);
+       currentAlarmList.add(newAlarm);
        rvAdapter.notifyItemInserted(position);
 
     }
 
     void removeAlarm(int id){
-        alarmsList.remove(id);
-        Alarm.decreaseAlarmCount();
+        currentAlarmList.remove(id);
         rvAdapter.notifyItemRemoved(id);
     }
 
@@ -111,25 +115,27 @@ public class AlarmActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void saveAlarmList(){
+
+
+    private void saveAlarmList(String option){
         SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(alarmsList);
-        editor.putString("AlarmList", json);
+        String json = gson.toJson(currentAlarmList);
+        editor.putString(option, json);
         editor.apply();
 
     }
 
-    private void loadAlarmList(){
+    private void loadAlarmList(String option){
         SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("AlarmList", null);
+        String json = sharedPreferences.getString(option, null);
         Type type = new TypeToken<ArrayList<Alarm>>() {}.getType();
-        alarmsList = gson.fromJson(json,type);
+        currentAlarmList = gson.fromJson(json,type);
 
-        if(alarmsList == null){
-            alarmsList = new ArrayList<>();
+        if(currentAlarmList == null){
+            currentAlarmList = new ArrayList<>();
         }
 
     }

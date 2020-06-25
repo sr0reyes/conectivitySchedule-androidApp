@@ -18,7 +18,9 @@
         <activity
             android:name=".activities.AlarmActivity"
             android:label="@string/title_activity_alarm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activities.HomeListActivity">
+        </activity>
         <activity android:name=".activities.HomeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

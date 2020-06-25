@@ -48,9 +48,11 @@ public class HomeListActivity extends AppCompatActivity {
                 String optionSelected = (String)parent.getItemAtPosition(position);
                 if(optionSelected.equals(wifiStr)) {
                     intent = new Intent(getApplicationContext(), AlarmActivity.class);
+                    intent.putExtra("OPTION",wifiStr);
                 }
                 if(optionSelected.equals(bluetoothStr)) {
                     intent = new Intent(getApplicationContext(), AlarmActivity.class);
+                    intent.putExtra("OPTION",bluetoothStr);
                 }
                 startActivity(intent);
             }
