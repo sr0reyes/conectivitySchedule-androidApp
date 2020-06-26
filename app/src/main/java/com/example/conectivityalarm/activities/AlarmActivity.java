@@ -64,10 +64,15 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createAlarm(rvAdapter.getItemCount());
-                saveAlarmList(activityTitle);
                 sendToast("No de Alarmas" + String.valueOf(currentAlarmList.size()), Toast.LENGTH_SHORT);
             }
         });
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        saveAlarmList(activityTitle);
     }
 
 
@@ -90,8 +95,13 @@ public class AlarmActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         rvAdapter = new RecyclerViewAdapter(currentAlarmList, new RecyclerViewAdapter.MyRecyclerViewActionListener() {
             @Override
-            public void onItemClickListener(long itemId, int itemPosition) {
-                sendToast("itemId: " + itemId + ", itemPosition: " + itemPosition, Toast.LENGTH_LONG);
+            public void onTimeClickListener(long itemId, int itemPosition) {
+                setTime(itemId, itemPosition);
+            }
+
+            @Override
+            public void onSwitchChanged(long itemId, final int itemPosition, boolean isChecked) {
+                currentAlarmList.get(itemPosition).setState(isChecked);
             }
         });
         rvAdapter.setHasStableIds(true);
@@ -118,13 +128,14 @@ public class AlarmActivity extends AppCompatActivity {
         rvAdapter.notifyItemRemoved(id);
     }
 
-    void selectTime(){
+    void setTime(long alarmObjectId, final int alarmObjectPosition){
+        int selectedHour = currentAlarmList.get(alarmObjectPosition).getHour();
+        int selectedMinute = currentAlarmList.get(alarmObjectPosition).getMinute();
         TimePickerDialog timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                selectedHour = hourOfDay;
-                selectedMinute = minute;
-
+                currentAlarmList.get(alarmObjectPosition).setTime(hourOfDay, minute);
+                rvAdapter.notifyDataSetChanged();
             }
         }, selectedHour, selectedMinute, true);
 

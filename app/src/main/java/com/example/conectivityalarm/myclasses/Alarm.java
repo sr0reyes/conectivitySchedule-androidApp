@@ -13,13 +13,25 @@ public class Alarm {
 
     public Alarm(long id){
         this.alarmID = id;
+        this.state = false;
+        this.action = 0;
+        this.hour = 0;
+        this.minute = 0;
+        this.time = "00:00";
     }
 
-    private void setTime(){
+    public void setTime(int hour, int minute){
+        this.hour = hour;
+        this.minute = minute;
         String formatHour = (this.hour < 10)? String.valueOf("0" + this.hour) : String.valueOf(this.hour);
         String formatMinute =  (this.minute < 10)? String.valueOf("0" + this.minute) : String.valueOf(this.minute);
         this.time = formatHour + ":" + formatMinute;
     }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
     public boolean getState() {
         return state;
     }
@@ -38,5 +50,13 @@ public class Alarm {
 
     public void setAlarmID(long alarmID) {
         this.alarmID = alarmID;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
     }
 }

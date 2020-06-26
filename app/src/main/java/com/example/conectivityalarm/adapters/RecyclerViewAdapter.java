@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -43,7 +45,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Alarm alarm = mAlarms.get(position);
 
+        TextView timeTextView = holder.TimeTv;
+        timeTextView.setText(alarm.getTime());
+
+        Switch stateSwitch = holder.ActivateSw;
+        stateSwitch.setChecked(alarm.getState());
     }
 
     @Override
@@ -72,18 +80,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             PrepTv = itemView.findViewById(R.id.preposition_tvR);
             TimeTv = itemView.findViewById(R.id.time_tvR);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            TimeTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holderListener.onItemClickListener(getItemId(), getAdapterPosition());
+                    holderListener.onTimeClickListener(getItemId(), getAdapterPosition());
                 }
             });
+
+            ActivateSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    holderListener.onSwitchChanged(getItemId(), getAdapterPosition(), isChecked);
+                }
+            });
+
+
         }
     }
 
     public interface MyRecyclerViewActionListener{
 
-        public void onItemClickListener(long itemId, int itemPosition);
+        void onTimeClickListener(long itemId, int itemPosition);
+        void onSwitchChanged(long itemId, int itemPosition, boolean isChecked);
     }
 
 }
