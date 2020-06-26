@@ -1,5 +1,6 @@
 package com.example.conectivityalarm.activities;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.lang.reflect.Type;
@@ -33,6 +35,9 @@ public class AlarmActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewAdapter rvAdapter;
     ItemTouchHelper itemTouchHelper;
+    int selectedHour;
+    int selectedMinute;
+
 
 
     @Override
@@ -58,7 +63,7 @@ public class AlarmActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertAlarm(rvAdapter.getItemCount());
+                createAlarm(rvAdapter.getItemCount());
                 saveAlarmList(activityTitle);
                 sendToast("No de Alarmas" + String.valueOf(currentAlarmList.size()), Toast.LENGTH_SHORT);
             }
@@ -98,10 +103,13 @@ public class AlarmActivity extends AppCompatActivity {
 
     }
 
-    void insertAlarm(int position){
-       Alarm newAlarm = new Alarm();
-       currentAlarmList.add(newAlarm);
-       rvAdapter.notifyItemInserted(position);
+
+
+    void createAlarm(int position){
+        final long generatedId =  System.currentTimeMillis();
+        Alarm newAlarm = new Alarm(generatedId);
+        currentAlarmList.add(newAlarm);
+        rvAdapter.notifyItemInserted(position);
 
     }
 
@@ -110,11 +118,24 @@ public class AlarmActivity extends AppCompatActivity {
         rvAdapter.notifyItemRemoved(id);
     }
 
+    void selectTime(){
+        TimePickerDialog timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                selectedHour = hourOfDay;
+                selectedMinute = minute;
+
+            }
+        }, selectedHour, selectedMinute, true);
+
+        timePicker.show();
+
+    }
+
     public void sendToast(String toastMessage, int length){
         Toast toast = Toast.makeText(getApplicationContext(), toastMessage, length);
         toast.show();
     }
-
 
 
     private void saveAlarmList(String option){

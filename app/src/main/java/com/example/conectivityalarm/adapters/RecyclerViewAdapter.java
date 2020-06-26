@@ -44,12 +44,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-
     }
 
     @Override
     public int getItemCount() {
         return mAlarms.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mAlarms.get(position).getAlarmID();
     }
 
 
