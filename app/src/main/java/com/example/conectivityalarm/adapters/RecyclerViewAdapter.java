@@ -47,11 +47,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Alarm alarm = mAlarms.get(position);
 
-        TextView timeTextView = holder.TimeTv;
-        timeTextView.setText(alarm.getTime());
+        TextView mTimeTextView = holder.TimeTv;
+        mTimeTextView.setText(alarm.getTime());
 
-        Switch stateSwitch = holder.ActivateSw;
-        stateSwitch.setChecked(alarm.getState());
+        Switch mSwitch = holder.ActivateSw;
+        mSwitch.setChecked(alarm.getState());
+
+        Spinner mSpinner = holder.ActionSpnr;
+        mSpinner.setSelection(alarm.getAction());
     }
 
     @Override
@@ -87,10 +90,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
 
+            ActionSpnr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    holderListener.onSpinnerOptionSelected(getAdapterPosition(), position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
             ActivateSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    holderListener.onSwitchChanged(getItemId(), getAdapterPosition(), isChecked);
+                    holderListener.onSwitchChanged(getAdapterPosition(), isChecked);
                 }
             });
 
@@ -101,7 +116,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface MyRecyclerViewActionListener{
 
         void onTimeClickListener(long itemId, int itemPosition);
-        void onSwitchChanged(long itemId, int itemPosition, boolean isChecked);
+        void onSwitchChanged(int itemPosition, boolean isChecked);
+        void onSpinnerOptionSelected(int itemPosition, int option);
     }
 
 }

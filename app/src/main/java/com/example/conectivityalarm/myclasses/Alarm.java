@@ -32,6 +32,10 @@ public class Alarm {
         this.state = state;
     }
 
+    public void setAction(int action) {
+        this.action = action;
+    }
+
     public boolean getState() {
         return state;
     }
@@ -46,10 +50,6 @@ public class Alarm {
 
     public long getAlarmID() {
         return alarmID;
-    }
-
-    public void setAlarmID(long alarmID) {
-        this.alarmID = alarmID;
     }
 
     public int getHour() {

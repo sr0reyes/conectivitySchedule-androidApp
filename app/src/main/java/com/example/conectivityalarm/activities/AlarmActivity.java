@@ -46,7 +46,6 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
 
         Intent intent = getIntent();
-
         activityTitle = intent.getStringExtra("OPTION");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,18 +76,7 @@ public class AlarmActivity extends AppCompatActivity {
 
 
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
 
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            removeAlarm(viewHolder.getAdapterPosition());
-            saveAlarmList(activityTitle);
-        }
-    };
 
     void buildRecyclerView(){
 
@@ -100,7 +88,12 @@ public class AlarmActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwitchChanged(long itemId, final int itemPosition, boolean isChecked) {
+            public void onSpinnerOptionSelected(int itemPosition, int option) {
+                currentAlarmList.get(itemPosition).setAction(option);
+            }
+
+            @Override
+            public void onSwitchChanged(int itemPosition, boolean isChecked) {
                 currentAlarmList.get(itemPosition).setState(isChecked);
             }
         });
@@ -171,5 +164,18 @@ public class AlarmActivity extends AppCompatActivity {
         }
 
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            removeAlarm(viewHolder.getAdapterPosition());
+            saveAlarmList(activityTitle);
+        }
+    };
 
 }
