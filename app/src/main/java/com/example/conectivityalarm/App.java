@@ -9,21 +9,26 @@ import android.os.Build;
 public class App extends Application {
 
     public static final String CHANNEL_1_ID = "channel1";
+    public static final String CHANNEL_2_ID = "channel1";
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        createChannel();
+        createChannels();
     }
 
-    private void createChannel(){
+    private void createChannels(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel1 = new NotificationChannel(CHANNEL_1_ID, "chanel 1", NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel1.setDescription("This is the notification chanel");
+            notificationChannel1.setDescription("This is the notification chanel 1");
+
+            NotificationChannel notificationChannel2 = new NotificationChannel(CHANNEL_2_ID, "chanel 2", NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel1.setDescription("This is the notification chanel 2");
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(notificationChannel1);
+            notificationManager.createNotificationChannel(notificationChannel2);
         }
     }
 }

@@ -28,12 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
 
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" >
+        </receiver>
+
     </application>
 
 </manifest>

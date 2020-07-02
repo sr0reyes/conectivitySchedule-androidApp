@@ -1,4 +1,4 @@
-package com.example.conectivityalarm;
+/*package com.example.conectivityalarm;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -151,4 +151,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast toast = Toast.makeText(getApplicationContext(), toastMessage, toastDuration);
         toast.show();
     }
-}
+}*/
