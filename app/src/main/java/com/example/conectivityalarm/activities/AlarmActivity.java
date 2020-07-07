@@ -95,7 +95,6 @@ public class AlarmActivity extends AppCompatActivity {
 
             @Override
             public void onSwitchChanged(int itemPosition, boolean isChecked) {
-                currentAlarmList.get(itemPosition).setActive(isChecked);
                 if(isChecked)
                     scheduleAlarm(itemPosition);
                 if(!isChecked)
@@ -150,6 +149,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     public void scheduleAlarm(int position){
         Alarm alarm = currentAlarmList.get(position);
+        alarm.setActive(true);
         int alarmID = (int) alarm.getAlarmID();
         int hour = alarm.getHour();
         int minute = alarm.getMinute();
@@ -187,6 +187,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     public void cancelAlarm(int position){
         Alarm alarm = currentAlarmList.get(position);
+        alarm.setActive(false);
         int alarmID = (int) alarm.getAlarmID();
         int hour = alarm.getHour();
         int minute = alarm.getMinute();

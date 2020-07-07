@@ -16,11 +16,11 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())){
-            Log.e("TAG","Starting jobScheduler");
+            Log.e(TAG,"Starting jobScheduler");
             scheduleJob(context);
         }
         else{
-            Log.e("TAG","Received unexpected Intent");
+            Log.e(TAG,"Received unexpected Intent");
         }
     }
 

@@ -20,12 +20,12 @@ import java.util.Calendar;
 public class RescheduleAlarmsJobService extends JobService {
 
     private static final String TAG = "RescheduleAlarmService";
-    private boolean jobCancelled = true;
+    private boolean jobCancelled = false;
     private ArrayList<Alarm> wifiAlarmsList;
     private ArrayList<Alarm> blueAlarmsList;
 
-    private final String WIFI = getString(R.string.activity_wifi);
-    private final String BLUE = getString(R.string.activity_bluetooth);
+    private final static String WIFI = "Wi-Fi";
+    private final static String BLUE = "Bluetooth";
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -51,6 +51,7 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(wifiAlarmsList.get(i).isActive()){
                         scheduleAlarm(wifiAlarmsList.get(i));
+                        Log.e(TAG, wifiAlarmsList.get(i).getAlarmType()+i);
                     }
 
                     if(jobCancelled)
@@ -62,6 +63,7 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(blueAlarmsList.get(i).isActive()){
                         scheduleAlarm(blueAlarmsList.get(i));
+                        Log.e(TAG, blueAlarmsList.get(i).getAlarmType()+i);
                     }
 
                     if(jobCancelled)
@@ -69,6 +71,7 @@ public class RescheduleAlarmsJobService extends JobService {
                 }
 
                 jobFinished(params, false);
+                Log.e(TAG, "job Completed");
             }
         }).start();
     }
