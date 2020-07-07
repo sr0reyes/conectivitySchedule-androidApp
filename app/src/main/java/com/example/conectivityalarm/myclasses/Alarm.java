@@ -4,16 +4,18 @@ package com.example.conectivityalarm.myclasses;
 public class Alarm {
 
     private long alarmID;
-    private boolean state;
+    private String alarmType;
+    private boolean active;
     private int action;
     private int hour;
     private int minute;
     private String time;
 
 
-    public Alarm(long id){
+    public Alarm(long id, String type){
         this.alarmID = id;
-        this.state = false;
+        this.alarmType = type;
+        this.active = false;
         this.action = 0;
         this.hour = 0;
         this.minute = 0;
@@ -28,16 +30,21 @@ public class Alarm {
         this.time = formatHour + ":" + formatMinute;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public String getAlarmType() {
+        return alarmType;
+    }
+
+
+    public void setActive(boolean state) {
+        this.active = state;
     }
 
     public void setAction(int action) {
         this.action = action;
     }
 
-    public boolean getState() {
-        return state;
+    public boolean isActive() {
+        return active;
     }
 
     public String getTime() {

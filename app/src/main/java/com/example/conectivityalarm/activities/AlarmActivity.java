@@ -40,8 +40,7 @@ public class AlarmActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewAdapter rvAdapter;
     ItemTouchHelper itemTouchHelper;
-    int selectedHour;
-    int selectedMinute;
+
 
 
 
@@ -80,9 +79,6 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
 
-
-
-
     void buildRecyclerView(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -99,7 +95,7 @@ public class AlarmActivity extends AppCompatActivity {
 
             @Override
             public void onSwitchChanged(int itemPosition, boolean isChecked) {
-                currentAlarmList.get(itemPosition).setState(isChecked);
+                currentAlarmList.get(itemPosition).setActive(isChecked);
                 if(isChecked)
                     scheduleAlarm(itemPosition);
                 if(!isChecked)
@@ -119,7 +115,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     void createAlarm(int position){
         final long generatedId =  System.currentTimeMillis();
-        Alarm newAlarm = new Alarm(generatedId);
+        Alarm newAlarm = new Alarm(generatedId, activityTitle);
         currentAlarmList.add(newAlarm);
         rvAdapter.notifyItemInserted(position);
 
@@ -137,7 +133,7 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 currentAlarmList.get(alarmObjectPosition).setTime(hourOfDay, minute);
-                currentAlarmList.get(alarmObjectPosition).setState(true);
+                currentAlarmList.get(alarmObjectPosition).setActive(true);
                 rvAdapter.notifyDataSetChanged();
                 scheduleAlarm(alarmObjectPosition);
             }
@@ -163,7 +159,7 @@ public class AlarmActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-        AlarmManager alarmManager =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
         intent.putExtra("ACTIVITY_TITLE", activityTitle);
         intent.putExtra("ACTION", action);
@@ -174,6 +170,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
 
         alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
         String message= activityTitle + " ";
         switch(action){
             case 0:

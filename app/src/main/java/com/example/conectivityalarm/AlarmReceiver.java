@@ -16,14 +16,13 @@ import static com.example.conectivityalarm.App.CHANNEL_2_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    private NotificationManagerCompat notificationManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         int action = intent.getIntExtra("ACTION", 0);
         String activityTitle = intent.getStringExtra("ACTIVITY_TITLE");
-        notificationManager = NotificationManagerCompat.from(context);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         String title = context.getString(R.string.app_name);
         String message = activityTitle + " ";

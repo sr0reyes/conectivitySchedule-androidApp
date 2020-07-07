@@ -51,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mTimeTextView.setText(alarm.getTime());
 
         Switch mSwitch = holder.ActivateSw;
-        mSwitch.setChecked(alarm.getState());
+        mSwitch.setChecked(alarm.isActive());
 
         Spinner mSpinner = holder.ActionSpnr;
         mSpinner.setSelection(alarm.getAction());
