@@ -67,7 +67,6 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createAlarm(rvAdapter.getItemCount());
-                sendToast("No de Alarmas" + String.valueOf(currentAlarmList.size()), Toast.LENGTH_SHORT);
             }
         });
     }
@@ -84,8 +83,8 @@ public class AlarmActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         rvAdapter = new RecyclerViewAdapter(currentAlarmList, new RecyclerViewAdapter.MyRecyclerViewActionListener() {
             @Override
-            public void onTimeClickListener(long itemId, int itemPosition) {
-                setTime(itemId, itemPosition);
+            public void onTimeClickListener(int itemPosition) {
+                setTime(itemPosition);
             }
 
             @Override
@@ -125,7 +124,7 @@ public class AlarmActivity extends AppCompatActivity {
         rvAdapter.notifyItemRemoved(id);
     }
 
-    void setTime(long alarmObjectId, final int alarmObjectPosition){
+    void setTime(final int alarmObjectPosition){
         int selectedHour = currentAlarmList.get(alarmObjectPosition).getHour();
         int selectedMinute = currentAlarmList.get(alarmObjectPosition).getMinute();
         TimePickerDialog timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {

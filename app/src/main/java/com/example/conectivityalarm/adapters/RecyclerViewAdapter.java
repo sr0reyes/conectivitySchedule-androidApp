@@ -86,7 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             TimeTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holderListener.onTimeClickListener(getItemId(), getAdapterPosition());
+                    holderListener.onTimeClickListener(getAdapterPosition());
                 }
             });
 
@@ -117,7 +117,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface MyRecyclerViewActionListener{
 
-        void onTimeClickListener(long itemId, int itemPosition);
+        void onTimeClickListener(int itemPosition);
         void onSwitchChanged(int itemPosition, boolean isChecked);
         void onSpinnerOptionSelected(int itemPosition, int option);
     }

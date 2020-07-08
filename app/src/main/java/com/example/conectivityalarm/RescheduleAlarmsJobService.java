@@ -51,7 +51,7 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(wifiAlarmsList.get(i).isActive()){
                         scheduleAlarm(wifiAlarmsList.get(i));
-                        Log.e(TAG, wifiAlarmsList.get(i).getAlarmType()+i);
+                        Log.d(TAG, wifiAlarmsList.get(i).getAlarmType()+i+wifiAlarmsList.get(i).getTime());
                     }
 
                     if(jobCancelled)
@@ -63,15 +63,15 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(blueAlarmsList.get(i).isActive()){
                         scheduleAlarm(blueAlarmsList.get(i));
-                        Log.e(TAG, blueAlarmsList.get(i).getAlarmType()+i);
+                        Log.d(TAG, blueAlarmsList.get(i).getAlarmType()+i+blueAlarmsList.get(i).getTime());
                     }
 
                     if(jobCancelled)
                         return;
                 }
-
+                Log.d(TAG, "job Completed");
                 jobFinished(params, false);
-                Log.e(TAG, "job Completed");
+
             }
         }).start();
     }
@@ -88,11 +88,11 @@ public class RescheduleAlarmsJobService extends JobService {
         calendar.add(Calendar.MINUTE, minute);
         calendar.add(Calendar.SECOND, 0);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(RescheduleAlarmsJobService.this, AlarmReceiver.class);
         intent.putExtra("ACTIVITY_TITLE", alarmType);
         intent.putExtra("ACTION", action);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(RescheduleAlarmsJobService.this, alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if(calendar.before(Calendar.getInstance())){
             calendar.add(Calendar.DATE, 1);
