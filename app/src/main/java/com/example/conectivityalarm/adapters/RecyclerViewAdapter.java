@@ -103,11 +103,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             });
 
 
-            ActivateSw.setOnClickListener(new View.OnClickListener() {
+            ActivateSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    boolean isChecked = ActivateSw.isChecked();
-                    holderListener.onSwitchChanged(getAdapterPosition(), isChecked);
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (buttonView.isPressed()) {
+                        holderListener.onSwitchChanged(getAdapterPosition(), isChecked);
+                    }
+
                 }
             });
 
