@@ -19,13 +19,10 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(false);
-        Log.d("WiFi is:", "Enable");
+        
         Log.d(TAG, "onReceive: ejecutado");
 
-        /*int action = intent.getIntExtra("ACTION", 0);
+        int action = intent.getIntExtra("ACTION", 0);
         String activityTitle = intent.getStringExtra("ACTIVITY_TITLE");
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
@@ -69,7 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         notificationManager.notify(notificationID, notification);
-        Log.d("TAG", message);*/
+        Log.d("TAG", message);
     }
 
 

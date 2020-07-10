@@ -84,9 +84,9 @@ public class RescheduleAlarmsJobService extends JobService {
         int action = alarm.getAction();
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY, hour);
-        calendar.add(Calendar.MINUTE, minute);
-        calendar.add(Calendar.SECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(RescheduleAlarmsJobService.this, AlarmReceiver.class);
