@@ -23,7 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Log.d(TAG, "onReceive: ejecutado");
 
         int action = intent.getIntExtra("ACTION", 0);
-        String activityTitle = intent.getStringExtra("ACTIVITY_TITLE");
+        String activityTitle = intent.getStringExtra("ALARM_TYPE");
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         String title = context.getString(R.string.app_name);

@@ -35,7 +35,8 @@ import java.util.Calendar;
 
 public class AlarmActivity extends AppCompatActivity {
 
-    String activityTitle;
+    private final  static String TAG = "AlarmActivity";
+    String alarmListType;
     ArrayList<Alarm> currentAlarmList;
     RecyclerView recyclerView;
     RecyclerViewAdapter rvAdapter;
@@ -48,15 +49,15 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-
         Intent intent = getIntent();
-        activityTitle = intent.getStringExtra("OPTION");
+        alarmListType = intent.getStringExtra("ALARM_TYPE");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(activityTitle);
+        getSupportActionBar().setTitle(alarmListType);
 
-        loadAlarmList(activityTitle);
+        loadAlarmList(alarmListType);
         buildRecyclerView();
 
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -74,8 +75,22 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onStop(){
         super.onStop();
-        saveAlarmList(activityTitle);
+        saveAlarmList(alarmListType);
     }
+
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            cancelAlarm(viewHolder.getAdapterPosition());
+            removeAlarm(viewHolder.getAdapterPosition());
+        }
+    };
 
 
     void buildRecyclerView(){
@@ -113,15 +128,16 @@ public class AlarmActivity extends AppCompatActivity {
 
     void createAlarm(int position){
         final long generatedId =  System.currentTimeMillis();
-        Alarm newAlarm = new Alarm(generatedId, activityTitle);
+        Alarm newAlarm = new Alarm(generatedId, alarmListType);
         currentAlarmList.add(newAlarm);
         rvAdapter.notifyItemInserted(position);
-
+        Log.d(TAG, "Alarm created whith id: " + generatedId);
     }
 
     void removeAlarm(int id){
         currentAlarmList.remove(id);
         rvAdapter.notifyItemRemoved(id);
+        Log.d(TAG, "Alarm: "+ id + " removed");
     }
 
     void setTime(final int alarmObjectPosition){
@@ -150,6 +166,7 @@ public class AlarmActivity extends AppCompatActivity {
         Alarm alarm = currentAlarmList.get(position);
         alarm.setActive(true);
         int alarmID = (int) alarm.getAlarmID();
+        String alarmType = alarm.getAlarmType();
         int hour = alarm.getHour();
         int minute = alarm.getMinute();
         int action = alarm.getAction();
@@ -160,7 +177,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intent.putExtra("ACTIVITY_TITLE", activityTitle);
+        intent.putExtra("ALARM_TYPE", alarmType);
         intent.putExtra("ACTION", action);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -170,7 +187,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        String message= activityTitle + " ";
+        String message= alarmListType + " ";
         switch(action){
             case 0:
                 message = message + getString(R.string.toastOn);
@@ -181,6 +198,8 @@ public class AlarmActivity extends AppCompatActivity {
         }
         message = message + " " + alarm.getTime();
         sendToast(message, Toast.LENGTH_SHORT);
+
+        Log.d(TAG,"Alarm: "+ alarmID + "scheduled at " + alarm.getTime());
 
     }
 
@@ -198,11 +217,13 @@ public class AlarmActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        intent.putExtra("ACTIVITY_TITLE", activityTitle);
+        intent.putExtra("ACTIVITY_TITLE", alarmListType);
         intent.putExtra("ACTION", action);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.cancel(pendingIntent);
+
+        Log.d(TAG, "Alarm: "+ alarmID + "is no longer active");
     }
 
     private void saveAlarmList(String option){
@@ -213,6 +234,7 @@ public class AlarmActivity extends AppCompatActivity {
         editor.putString(option, json);
         editor.apply();
 
+        Log.d(TAG,option + " Alarms saved on shared preferences" );
     }
 
     private void loadAlarmList(String option){
@@ -225,21 +247,9 @@ public class AlarmActivity extends AppCompatActivity {
         if(currentAlarmList == null){
             currentAlarmList = new ArrayList<>();
         }
-
+        Log.d(TAG, option + " Alarms Retrieved from shared prefernces");
     }
 
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            cancelAlarm(viewHolder.getAdapterPosition());
-            removeAlarm(viewHolder.getAdapterPosition());
-        }
-    };
 
 }

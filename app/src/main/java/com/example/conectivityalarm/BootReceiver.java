@@ -34,9 +34,9 @@ public class BootReceiver extends BroadcastReceiver {
         JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         int resultCode = scheduler.schedule(info);
         if(resultCode == JobScheduler.RESULT_SUCCESS){
-            Log.d(TAG, "ResetAlarmJob scheduled");
+            Log.d(TAG, "RescheduleAlarmsJob scheduled");
         }else{
-            Log.d(TAG, "ResetAlarmJob not scheduled");
+            Log.d(TAG, "RescheduleAlarmsJob not scheduled");
         }
 
     }

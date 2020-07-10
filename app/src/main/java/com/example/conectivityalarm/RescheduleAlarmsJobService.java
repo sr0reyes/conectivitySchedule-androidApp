@@ -51,7 +51,7 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(wifiAlarmsList.get(i).isActive()){
                         scheduleAlarm(wifiAlarmsList.get(i));
-                        Log.d(TAG, wifiAlarmsList.get(i).getAlarmType()+i+wifiAlarmsList.get(i).getTime());
+                        Log.d(TAG, "wifi alarm "+ wifiAlarmsList.get(i).getAlarmID() + " scheduled at: " + wifiAlarmsList.get(i).getAlarmID());
                     }
 
                     if(jobCancelled)
@@ -63,12 +63,13 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(blueAlarmsList.get(i).isActive()){
                         scheduleAlarm(blueAlarmsList.get(i));
-                        Log.d(TAG, blueAlarmsList.get(i).getAlarmType()+i+blueAlarmsList.get(i).getTime());
+                        Log.d(TAG, "bluetooth alarm "+ blueAlarmsList.get(i).getAlarmID() + " scheduled at: " + blueAlarmsList.get(i).getAlarmID());
                     }
 
                     if(jobCancelled)
                         return;
                 }
+
                 Log.d(TAG, "job Completed");
                 jobFinished(params, false);
 
@@ -90,7 +91,7 @@ public class RescheduleAlarmsJobService extends JobService {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(RescheduleAlarmsJobService.this, AlarmReceiver.class);
-        intent.putExtra("ACTIVITY_TITLE", alarmType);
+        intent.putExtra("ALARM_TYPE", alarmType);
         intent.putExtra("ACTION", action);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(RescheduleAlarmsJobService.this, alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

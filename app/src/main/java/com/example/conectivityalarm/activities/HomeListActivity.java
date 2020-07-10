@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 public class HomeListActivity extends AppCompatActivity {
 
+    private  final String WIFI = getString(R.string.activity_wifi);
+    private  final String BLUE = getString(R.string.activity_wifi);
     ListView optionsList;
     ArrayList<String> optionsArr;
-    String wifiStr;
-    String bluetoothStr;
     Intent intent;
 
     @Override
@@ -26,13 +26,10 @@ public class HomeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_list);
 
-        wifiStr = getString(R.string.activity_wifi);
-        bluetoothStr = getString(R.string.activity_bluetooth);
-
         optionsList = findViewById(R.id.list_view);
         optionsArr = new ArrayList<>();
-        optionsArr.add(wifiStr);
-        optionsArr.add(bluetoothStr);
+        optionsArr.add(WIFI);
+        optionsArr.add(BLUE);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
@@ -46,13 +43,13 @@ public class HomeListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String optionSelected = (String)parent.getItemAtPosition(position);
-                if(optionSelected.equals(wifiStr)) {
+                if(optionSelected.equals(WIFI)) {
                     intent = new Intent(getApplicationContext(), AlarmActivity.class);
-                    intent.putExtra("OPTION",wifiStr);
+                    intent.putExtra("ALARM_TYPE",WIFI);
                 }
-                if(optionSelected.equals(bluetoothStr)) {
+                if(optionSelected.equals(BLUE)) {
                     intent = new Intent(getApplicationContext(), AlarmActivity.class);
-                    intent.putExtra("OPTION",bluetoothStr);
+                    intent.putExtra("ALARM_TYPE",BLUE);
                 }
                 startActivity(intent);
             }
