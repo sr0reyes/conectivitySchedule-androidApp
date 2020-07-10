@@ -19,7 +19,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
-        
+
         Log.d(TAG, "onReceive: ejecutado");
 
         int action = intent.getIntExtra("ACTION", 0);
