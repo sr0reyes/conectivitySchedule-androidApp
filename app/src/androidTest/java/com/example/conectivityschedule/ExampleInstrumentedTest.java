@@ -1,4 +1,4 @@
-package com.example.conectivityalarm;
+package com.example.conectivityschedule;
 
 import android.content.Context;
 

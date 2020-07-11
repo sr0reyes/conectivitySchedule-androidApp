@@ -1,15 +1,14 @@
-package com.example.conectivityalarm;
+package com.example.conectivityschedule;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.conectivityalarm.myclasses.Alarm;
+import com.example.conectivityschedule.myclasses.Alarm;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

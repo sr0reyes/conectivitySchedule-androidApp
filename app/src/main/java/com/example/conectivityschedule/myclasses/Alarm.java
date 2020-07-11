@@ -1,4 +1,4 @@
-package com.example.conectivityalarm.myclasses;
+package com.example.conectivityschedule.myclasses;
 
 
 public class Alarm {

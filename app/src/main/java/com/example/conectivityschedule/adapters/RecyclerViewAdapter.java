@@ -1,7 +1,6 @@
-package com.example.conectivityalarm.adapters;
+package com.example.conectivityschedule.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.conectivityalarm.R;
-import com.example.conectivityalarm.myclasses.Alarm;
+import com.example.conectivityschedule.R;
+import com.example.conectivityschedule.myclasses.Alarm;
 
 import java.util.ArrayList;
 

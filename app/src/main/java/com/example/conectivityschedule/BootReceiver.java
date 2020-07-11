@@ -1,9 +1,8 @@
-package com.example.conectivityalarm;
+package com.example.conectivityschedule;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
-import android.content.ComponentCallbacks;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;

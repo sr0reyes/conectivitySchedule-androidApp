@@ -1,9 +1,8 @@
-package com.example.conectivityalarm;
+package com.example.conectivityschedule;
 
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.net.Uri;
 import android.os.Build;
 
 public class App extends Application {

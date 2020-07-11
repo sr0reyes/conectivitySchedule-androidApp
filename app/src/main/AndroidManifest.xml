@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.conectivityalarm">
+    package="com.example.conectivityschedule">
 
 
     <uses-permission android:name="android.permission.ACCES_WIFI_STATE" />
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
-        android:name=".App"
+        android:name="com.example.conectivityschedule.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <receiver
-            android:name=".BootReceiver"
+            android:name="com.example.conectivityschedule.BootReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -31,11 +31,11 @@
         </receiver>
 
         <activity
-            android:name=".activities.AlarmActivity"
+            android:name="com.example.conectivityschedule.activities.AlarmActivity"
             android:label="@string/title_activity_alarm"
-            android:parentActivityName=".activities.HomeListActivity"
+            android:parentActivityName="com.example.conectivityschedule.activities.HomeListActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.HomeListActivity">
+        <activity android:name="com.example.conectivityschedule.activities.HomeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,12 +44,12 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name="com.example.conectivityschedule.AlarmReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
 
         <service
-            android:name=".RescheduleAlarmsJobService"
+            android:name="com.example.conectivityschedule.RescheduleAlarmsJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
