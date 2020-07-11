@@ -78,7 +78,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         sendNotification(context, alarmType, actionString, notificationManager, notificationId);
                     }
                 }
-                if(action == 0) {
+                if(action == 1) {
                     if (blueAdp.isEnabled()) {
                         try {
                             blueAdp.disable();
