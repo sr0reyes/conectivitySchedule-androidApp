@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class HomeListActivity extends AppCompatActivity {
 
-    private  final String WIFI = getString(R.string.activity_wifi);
-    private  final String BLUE = getString(R.string.activity_wifi);
+    private  final String WIFI = "Wi-Fi";
+    private  final String BLUE = "Bluetooth";
     ListView optionsList;
     ArrayList<String> optionsArr;
     Intent intent;

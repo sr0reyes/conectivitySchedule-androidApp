@@ -127,17 +127,17 @@ public class AlarmActivity extends AppCompatActivity {
 
 
     void createAlarm(int position){
-        final long generatedId =  System.currentTimeMillis();
+        final int generatedId =  (int) System.currentTimeMillis();
         Alarm newAlarm = new Alarm(generatedId, alarmListType);
         currentAlarmList.add(newAlarm);
         rvAdapter.notifyItemInserted(position);
         Log.d(TAG, "Alarm created whith id: " + generatedId);
     }
 
-    void removeAlarm(int id){
-        currentAlarmList.remove(id);
-        rvAdapter.notifyItemRemoved(id);
-        Log.d(TAG, "Alarm: "+ id + " removed");
+    void removeAlarm(int position){
+        currentAlarmList.remove(position);
+        rvAdapter.notifyItemRemoved(position);
+        Log.d(TAG, "Alarm removed");
     }
 
     void setTime(final int alarmObjectPosition){
@@ -199,7 +199,7 @@ public class AlarmActivity extends AppCompatActivity {
         message = message + " " + alarm.getTime();
         sendToast(message, Toast.LENGTH_SHORT);
 
-        Log.d(TAG,"Alarm: "+ alarmID + "scheduled at " + alarm.getTime());
+        Log.d(TAG,"Alarm: "+ alarmID + " scheduled at " + alarm.getTime());
 
     }
 
@@ -223,18 +223,18 @@ public class AlarmActivity extends AppCompatActivity {
 
         alarmManager.cancel(pendingIntent);
 
-        Log.d(TAG, "Alarm: "+ alarmID + "is no longer active");
+        Log.d(TAG, "Alarm "+ alarmID + " is no longer active");
     }
 
-    private void saveAlarmList(String option){
+    private void saveAlarmList(String alarmType){
         SharedPreferences sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(currentAlarmList);
-        editor.putString(option, json);
+        editor.putString(alarmType, json);
         editor.apply();
 
-        Log.d(TAG,option + " Alarms saved on shared preferences" );
+        Log.d(TAG,alarmType + " Alarms saved on shared preferences" );
     }
 
     private void loadAlarmList(String option){

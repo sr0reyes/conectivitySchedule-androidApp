@@ -51,19 +51,16 @@ public class RescheduleAlarmsJobService extends JobService {
 
                     if(wifiAlarmsList.get(i).isActive()){
                         scheduleAlarm(wifiAlarmsList.get(i));
-                        Log.d(TAG, "wifi alarm "+ wifiAlarmsList.get(i).getAlarmID() + " scheduled at: " + wifiAlarmsList.get(i).getAlarmID());
                     }
 
                     if(jobCancelled)
                         return;
                 }
 
-
                 for(int i = 0; i < blueAlarmsList.size(); i++){
 
                     if(blueAlarmsList.get(i).isActive()){
                         scheduleAlarm(blueAlarmsList.get(i));
-                        Log.d(TAG, "bluetooth alarm "+ blueAlarmsList.get(i).getAlarmID() + " scheduled at: " + blueAlarmsList.get(i).getAlarmID());
                     }
 
                     if(jobCancelled)
@@ -100,7 +97,7 @@ public class RescheduleAlarmsJobService extends JobService {
         }
 
         alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
+        Log.d(TAG, alarm.getAlarmType() +" Alarm scheduled at: " + calendar.getTime());
 
     }
 

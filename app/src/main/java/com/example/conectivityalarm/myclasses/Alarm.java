@@ -3,7 +3,7 @@ package com.example.conectivityalarm.myclasses;
 
 public class Alarm {
 
-    private long alarmID;
+    private int alarmID;
     private String alarmType;
     private boolean active;
     private int action;
@@ -12,7 +12,7 @@ public class Alarm {
     private String time;
 
 
-    public Alarm(long id, String type){
+    public Alarm(int id, String type){
         this.alarmID = id;
         this.alarmType = type;
         this.active = false;
@@ -55,7 +55,7 @@ public class Alarm {
         return action;
     }
 
-    public long getAlarmID() {
+    public int getAlarmID() {
         return alarmID;
     }
 
