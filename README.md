@@ -11,7 +11,7 @@ Android app that allows the user to set a time when the Wi-Fi or the Bluetooth s
 
 
 ## Issues
-- Up from API 29 (Android 10) the wi-fi or bluetooth adapter wont be turned off/on. The tools and methods that allow Applications to perform the tasK are depeccrecated
+- Up from API 29 (Android 10) the wi-fi or bluetooth adapter wont be turned off/on. The tools and methods that allow Applications to perform the task are depeccrecated
 
 
 
