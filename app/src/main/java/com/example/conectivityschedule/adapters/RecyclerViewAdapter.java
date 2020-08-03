@@ -35,12 +35,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View alarmView = inflater.inflate(R.layout.recycle_layout_item, parent, false);
+        View alarmView = inflater.inflate(R.layout.recycle_layout_item2, parent, false);
         ViewHolder viewHolder = new ViewHolder(alarmView, myRecyclerViewActionListener);
 
         return viewHolder;
 
-    }
+    }   
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -77,10 +77,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(View itemView, final MyRecyclerViewActionListener holderListener){
             super(itemView);
-            ActivateSw = itemView.findViewById(R.id.alarm_switchR);
-            ActionSpnr = itemView.findViewById(R.id.alarm_spinnerR);
-            PrepTv = itemView.findViewById(R.id.preposition_tvR);
-            TimeTv = itemView.findViewById(R.id.time_tvR);
+            ActivateSw = itemView.findViewById(R.id.alarm_switch);
+            ActionSpnr = itemView.findViewById(R.id.alarm_spinner);
+            PrepTv = itemView.findViewById(R.id.preposition_tv);
+            TimeTv = itemView.findViewById(R.id.time_tv);
 
             TimeTv.setOnClickListener(new View.OnClickListener() {
                 @Override

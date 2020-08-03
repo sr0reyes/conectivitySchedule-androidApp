@@ -34,7 +34,8 @@
             android:name="com.example.conectivityschedule.activities.AlarmActivity"
             android:label="@string/title_activity_alarm"
             android:parentActivityName="com.example.conectivityschedule.activities.HomeListActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name="com.example.conectivityschedule.activities.HomeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
