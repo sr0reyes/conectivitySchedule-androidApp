@@ -1,4 +1,4 @@
-package com.example.conectivityschedule;
+package com.example.connectivityschedule;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;

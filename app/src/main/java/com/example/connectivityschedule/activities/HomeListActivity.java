@@ -1,4 +1,4 @@
-package com.example.conectivityschedule.activities;
+package com.example.connectivityschedule.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.conectivityschedule.R;
+import com.example.connectivityschedule.R;
 
 import java.util.ArrayList;
 

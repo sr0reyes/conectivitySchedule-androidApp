@@ -1,4 +1,4 @@
-package com.example.conectivityschedule.adapters;
+package com.example.connectivityschedule.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.conectivityschedule.R;
-import com.example.conectivityschedule.myclasses.Alarm;
+import com.example.connectivityschedule.R;
+import com.example.connectivityschedule.myclasses.Alarm;
 
 import java.util.ArrayList;
 

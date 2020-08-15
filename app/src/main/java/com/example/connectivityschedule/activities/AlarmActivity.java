@@ -1,4 +1,4 @@
-package com.example.conectivityschedule.activities;
+package com.example.connectivityschedule.activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.conectivityschedule.AlarmReceiver;
-import com.example.conectivityschedule.R;
-import com.example.conectivityschedule.adapters.RecyclerViewAdapter;
-import com.example.conectivityschedule.myclasses.Alarm;
+import com.example.connectivityschedule.AlarmReceiver;
+import com.example.connectivityschedule.R;
+import com.example.connectivityschedule.adapters.RecyclerViewAdapter;
+import com.example.connectivityschedule.myclasses.Alarm;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

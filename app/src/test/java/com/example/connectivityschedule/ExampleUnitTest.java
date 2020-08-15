@@ -1,4 +1,4 @@
-package com.example.conectivityschedule;
+package com.example.connectivityschedule;
 
 import org.junit.Test;
 

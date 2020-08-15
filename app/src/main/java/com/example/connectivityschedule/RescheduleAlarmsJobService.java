@@ -1,4 +1,4 @@
-package com.example.conectivityschedule;
+package com.example.connectivityschedule;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.conectivityschedule.myclasses.Alarm;
+import com.example.connectivityschedule.myclasses.Alarm;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

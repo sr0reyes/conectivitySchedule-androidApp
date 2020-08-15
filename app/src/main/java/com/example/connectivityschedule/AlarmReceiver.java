@@ -1,4 +1,4 @@
-package com.example.conectivityschedule;
+package com.example.connectivityschedule;
 
 import android.app.Notification;
 import android.bluetooth.BluetoothAdapter;
@@ -11,7 +11,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import static com.example.conectivityschedule.App.CHANNEL_1_ID;
+import static com.example.connectivityschedule.App.CHANNEL_1_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

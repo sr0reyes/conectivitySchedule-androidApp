@@ -1,2 +1,2 @@
-rootProject.name='ConectivitySchedule'
+rootProject.name='Connectivity Schedule'
 include ':app'
