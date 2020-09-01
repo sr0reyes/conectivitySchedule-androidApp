@@ -1,4 +1,4 @@
-# Conectivity Schedule
+# Connectivity Schedule
 
 ## Description
 Android app that allows the user to set a time when the Wi-Fi or the Bluetooth should be turned off or on.
